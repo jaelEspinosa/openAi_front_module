@@ -18,7 +18,7 @@ export const prosConsDiscusserUseCase =  async (prompt: string) => {
         if(!resp.ok) throw new Error('No se ha podido realizar la comparación.')
         const data = await resp.json() as ProsConsResponse;
         return {
-            ok: false,
+            ok: true,
             ...data
         }
         

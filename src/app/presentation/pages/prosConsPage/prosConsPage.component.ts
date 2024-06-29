@@ -53,10 +53,11 @@ ngAfterViewChecked() {
           {
             isGpt:true,
             text: res.content
-          }
+          }         
         ]);
         this.scrollToBottom()
-      }
+      },
+      error: err => console.log(err)
     })
   }
 
