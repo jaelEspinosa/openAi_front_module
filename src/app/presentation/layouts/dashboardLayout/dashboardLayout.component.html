@@ -1,7 +1,11 @@
 
+<div #menuButton class="md:hidden relative top-3 left-3 text-2xl transition-all" >
+  <button (click)="toggleMenu()"><i class="fa-solid fa-bars"></i></button>  
+</div>
 <main class="flex flex-row mt-7">
     <nav
-      class="hidden sm:flex flex-col ml-5 w-[370px] min-h-[calc(100vh-3.0rem)] bg-white bg-opacity-10 p-5 rounded-3xl"
+      #menu
+      class="hidden md:flex flex-col ml-5 w-[370px] min-h-[calc(100vh-3.0rem)] bg-white bg-opacity-10 p-5 rounded-3xl transition-all"
     >
       <h1
         class="font-bold text-lg lg:text-3xl bg-gradient-to-br from-white via-white/50 bg-clip-text text-transparent"
@@ -19,15 +23,17 @@
           [title]="route.data!['title']"
           [icon]="route.data!['icon']"
           [path]="route.path!"
+          (click)="toggleMenu()"
         />
       }
       <!-- End Nav Links -->
     </nav>
   
     <section
-      class="mx-3 sm:mx-20 flex flex-col w-full h-[calc(100vh-50px)] bg-white bg-opacity-10 p-5 rounded-3xl"
+      #chatBox
+      class="  mx-3 sm:mx-20 md:flex flex-col w-full md:h-[calc(100vh-50px)] h-[calc(100vh-100px)] bg-white bg-opacity-10 p-5 rounded-3xl transition-all"
     >
-      <div class="flex h-full flex-row">
+      <div class="flex h-full flex-row ">
         <div class="flex flex-col flex-auto p-1">
           <router-outlet />
         </div>
