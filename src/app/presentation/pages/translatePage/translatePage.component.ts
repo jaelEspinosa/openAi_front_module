@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, ViewChild, inject, signal } from '@angular/core';
+import { AfterViewChecked, ChangeDetectionStrategy, Component, ElementRef, ViewChild, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ChatMessageComponent, MyMessageComponent, TypingLoaderComponent, TextMessageBoxComponent, TextMessageEvent, TextMessageBoxEvent, TextMessageBoxSelectComponent } from '@components/index';
 import { Message } from '@interfaces/message.interface';
@@ -19,7 +19,10 @@ import { OpenAiService } from 'app/presentation/services/openai.service';
   templateUrl: './translatePage.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class TranslatePageComponent {
+export default class TranslatePageComponent implements AfterViewChecked {
+  ngAfterViewChecked(): void {
+    this.scrollToBottom()
+  }
   public messages = signal<Message[]>([]);
   public isLoading = signal(false);
   public openAiService = inject( OpenAiService )
@@ -28,6 +31,7 @@ export default class TranslatePageComponent {
 
   public languages = signal( [
     { id: 'alemán', text: 'Alemán' },
+    { id: 'español', text: 'Español' },
     { id: 'árabe', text: 'Árabe' },
     { id: 'bengalí', text: 'Bengalí' },
     { id: 'francés', text: 'Francés' },
@@ -65,7 +69,9 @@ export default class TranslatePageComponent {
           this.isLoading.set(false)
           this.scrollToBottom();
         }
-       });
+      });
+      this.scrollToBottom();
+
     }
     // Método para desplazar el scroll hacia el final
  private scrollToBottom(): void {

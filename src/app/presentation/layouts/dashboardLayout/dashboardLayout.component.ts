@@ -21,11 +21,13 @@ export class DashboardLayoutComponent {
   @ViewChild('menu') private menu!: ElementRef;
   @ViewChild('chatBox') private chatBox!: ElementRef;
 
-toggleMenu() {
   
+toggleMenu() {
+  console.log('las rutas son', this.routes)
   this.menuButton.nativeElement.classList.toggle('hidden')
   this.menu.nativeElement.classList.toggle('hidden')
   this.chatBox.nativeElement.classList.toggle('hidden')
 }
   public routes = routes[0].children?.filter( (route) => route.data )
+  
 }
