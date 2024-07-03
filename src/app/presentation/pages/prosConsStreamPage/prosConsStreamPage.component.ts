@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, ViewChild, inject, signal } from '@angular/core';
+import { AfterViewChecked, ChangeDetectionStrategy, Component, ElementRef, ViewChild, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ChatMessageComponent, MyMessageComponent, TypingLoaderComponent, TextMessageBoxComponent, TextMessageEvent, TextMessageBoxEvent } from '@components/index';
 import { Message } from '@interfaces/message.interface';
@@ -19,7 +19,10 @@ import { OpenAiService } from 'app/presentation/services/openai.service';
   templateUrl: './prosConsStreamPage.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export  default class ProsConsStreamPageComponent { 
+export  default class ProsConsStreamPageComponent implements AfterViewChecked{
+  ngAfterViewChecked(): void {
+    this.scrollToBottom()
+  } 
 
   @ViewChild('chatMessages') private chatMessagesContainer!: ElementRef;
   
