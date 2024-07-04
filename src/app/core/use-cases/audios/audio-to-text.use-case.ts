@@ -2,13 +2,16 @@ import { AudioToTextResponse } from "@interfaces/index";
 import { environment } from "environments/environment.development";
 
 
-export const audioTotextUseCase = async ( prompt: string, file: File ) => {
+export const audioTotextUseCase = async ( file: File, prompt?: string) => {
 
     try {
         
         const formData = new FormData();
-        formData.append('prompt', prompt);
         formData.append('file', file);
+        
+        if( prompt ){
+            formData.append('prompt', prompt);
+        }
 
         const resp = await fetch(`${ environment.backendApi}/audio-to-text`,{
             method: 'POST',

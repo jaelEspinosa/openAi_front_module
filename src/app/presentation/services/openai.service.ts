@@ -27,9 +27,9 @@ export class OpenAiService {
     return from( textToAudioUseCase(prompt, voice))
    };
 
-   audioToText(prompt: string, file:File ){
-    console.log( { prompt } )
-    return from( audioTotextUseCase (prompt, file))
+   audioToText( file:File, prompt?: string ){
+    
+    return from( audioTotextUseCase ( file, prompt))
    };
     
 }

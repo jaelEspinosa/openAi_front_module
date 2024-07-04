@@ -36,7 +36,7 @@
 
 <div class="ml-4">
     <button 
-      class="btn-primary" 
+      [class]="isSelectedfile() ? 'btn-primary-success': 'btn-primary'" 
       type="submit"
       [disabled]="myForm.invalid"
       >

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 export interface TextMessageEvent {
@@ -22,6 +22,8 @@ export class TextMessageBoxFileComponent {
   @Input() placeholder: string = '';
  
   @Output() onMessage = new EventEmitter<TextMessageEvent>();
+ 
+  public isSelectedfile = signal<boolean>(false);
 
   public fb = inject( FormBuilder )
 
@@ -37,6 +39,7 @@ export class TextMessageBoxFileComponent {
   handleSelectedFile( event: any){
     const file = event.target.files.item(0)
     this.myForm.controls.file.setValue( file )
+    this.isSelectedfile.set( true );
   }
 
   handleSubmit() {
@@ -47,6 +50,7 @@ export class TextMessageBoxFileComponent {
 
       this.onMessage.emit({prompt, file});
       this.myForm.reset();
+      this.isSelectedfile.set( false )
     }
   }
 }
