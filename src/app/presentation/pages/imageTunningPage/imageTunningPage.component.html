@@ -1,1 +1,69 @@
-<p>imageTunningPage works!</p>,
+@if( originalImage()) {
+    <div class="fixed flex flex-col items-center top-10 right-10 z-10 fade-in">
+        <span>editando</span>
+        <img 
+            [src]="originalImage()" 
+            alt="imagen a editar"
+            class="border rounded-xl w-36 h-36 object-contain"
+            >
+            <button
+                class="btn-primary mt-2"
+                (click)="generateVariation()"
+                [disabled]="isDisabledButton"
+            >
+                Generar Variación
+            </button>
+    </div>
+}
+
+
+<div class="chat-container">
+    <div #chatMessages class="chat-messages myScroll">
+  
+          <div class="grid gap-y-2">
+  
+            <!-- Chat Messages -->  
+            <app-chat-message
+            text="Describe la imagen que quieras generar."
+            />
+  
+            @for(message of messages(); track $index){
+              @if(message.isGpt){
+                <app-gpt-message-editable-image
+                [text]="message.text"
+                [image]="message.imageUrl!"
+                (onSelecetedImage)="handleImageChange( $event, message.imageUrl!  )"
+                />
+                <!-- <app-chat-message
+                text="Haz click sobre la imagen para realizar una variación."
+                /> -->
+              }@else {
+                <app-my-message
+                [text]="message.text"/>
+                
+              }
+  
+            }
+  
+          </div>
+  
+          @if(isLoading()){
+            <app-typing-loader/>
+          }
+  
+    </div>
+  
+           <!-- MessageBox -->
+  
+           <app-text-message-box 
+           placeholder="Escribe aquí tu consulta..."
+           (onMessage)="handleMessage($event)"
+           />
+  
+          
+  </div>
+  
+  
+  
+
+

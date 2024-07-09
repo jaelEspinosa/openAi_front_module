@@ -10,4 +10,5 @@ export interface Message {
         message:   string;
       },
     audioUrl?:string;  
+    imageUrl?:string;
     }

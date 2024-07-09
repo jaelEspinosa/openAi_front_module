@@ -29,12 +29,4 @@ public openAiService = inject( OpenAiService )
     console.log( "desde el padre ", {prompt})
   }
 
-
-  handleMessageWhithFile( {prompt, file}: TextMessageEvent){
-    console.log({prompt, file})
-  }
-
-  handleMessageWhithSelect(event:TextMessageBoxEvent){
-     console.log(event)
-  }
  }

@@ -1,5 +1,5 @@
 
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { MarkdownModule } from 'ngx-markdown';
 
 @Component({
@@ -11,8 +11,12 @@ import { MarkdownModule } from 'ngx-markdown';
   templateUrl: './chatMessage.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatMessageComponent { 
+export class ChatMessageComponent implements OnInit {
+ngOnInit(): void {
+  console.log(this.imageUrl)
+} 
 @Input({required:true}) text!:string;
 @Input() audioUrl?:string;
+@Input() imageUrl?:string;
 
 }
