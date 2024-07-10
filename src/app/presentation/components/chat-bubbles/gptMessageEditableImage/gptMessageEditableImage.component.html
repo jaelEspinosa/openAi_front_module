@@ -8,24 +8,28 @@
 
         <div class="relative ml-3 text-sm bg-black bg-opacity-25 pt-3 pb-2 px-4 shadow rounded-xl">
          
-           @if( image ){
-            <!-- <img [src]="image" 
-                 [alt]="image"  
+           <!-- @if( imageInfo.url ){ -->
+            <!-- <img [src]="imageInfo.url" 
+                 [alt]="imageInfo.alt"  
                  class="rounded-xl object-cover"
                  width="1024"
                  height="1024"
                  (click)="handleClick()"
                 /> -->
-            
+        <div class="w-[480px] h-[480px]">
             <canvas
-              width="480"
-              height="480"
+              class="My-canvas"
+              width="1024"
+              height="1024"
               #canvas
-              (click)="handleClick()"
-              (mousedown)="onMouseDown( $event )"
-              (mousemove)="onMouseMove( $event )"
+              
+              (mousedown) = "onMouseDown( $event )"
+              (mousemove) = "onMouseMove( $event )"
+              (mouseup) = "onMouseUp()"
             ></canvas>    
-           } 
+
+        </div>    
+           <!-- }  -->
         </div>
     </div>
 

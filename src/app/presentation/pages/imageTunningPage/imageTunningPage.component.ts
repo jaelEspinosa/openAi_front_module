@@ -23,15 +23,15 @@ import { OpenAiService } from 'app/presentation/services/openai.service';
 export default class ImageTunningPageComponent implements AfterViewChecked {
 
   ngAfterViewChecked(): void {
-    this.scrollToBottom();
+   // this.scrollToBottom();
   }
  
   @ViewChild('chatMessages') private chatMessagesContainer!: ElementRef;
 
-  public messages = signal<Message[]>([{isGpt: true, imageUrl: 'http://localhost:3000/gpt/image-generation/1720432332648.png', text:'Dummy Image'}]);
-  //public messages = signal<Message[]>([]);
+  public messages = signal<Message[]>([]);
   public isLoading = signal(false);
   public originalImage = signal<string | undefined>(undefined)
+  public maskImage = signal<string | undefined>(undefined)
 
   public openAiService = inject( OpenAiService )
   public isDisabledButton : boolean = false
@@ -39,7 +39,7 @@ export default class ImageTunningPageComponent implements AfterViewChecked {
   handleMessage(prompt: string){
       this.isLoading.set(true)
       this.messages.update ( prev => [...prev, {isGpt:false, text: prompt}])
-      this.openAiService.imageGenerate( prompt )
+      this.openAiService.imageGenerate( prompt, this.originalImage(), this.maskImage() )
       .subscribe({
         next: resp => {
           if(resp.response){
@@ -68,11 +68,13 @@ export default class ImageTunningPageComponent implements AfterViewChecked {
      }
 
      handleImageChange( newImage: string, originalImage: string){
-      this.originalImage.set(originalImage)
+      
+      this.originalImage.set(originalImage);
+      this.maskImage.set( newImage );
+      
 
-      // Todo: mask
 
-      console.log({newImage, originalImage})
+      
      }
 
 

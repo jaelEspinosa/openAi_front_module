@@ -16,7 +16,7 @@
     </div>
 }
 
-
+handleImageChange
 <div class="chat-container">
     <div #chatMessages class="chat-messages myScroll">
   
@@ -31,8 +31,8 @@
               @if(message.isGpt){
                 <app-gpt-message-editable-image
                 [text]="message.text"
-                [image]="message.imageUrl!"
-                (onSelecetedImage)="handleImageChange( $event, message.imageUrl!  )"
+                [imageInfo]="{url:message.imageUrl!, alt:'imagen'}"
+                (onSelectedImage)="handleImageChange( $event, message.imageUrl!  )"
                 />
                 <!-- <app-chat-message
                 text="Haz click sobre la imagen para realizar una variación."

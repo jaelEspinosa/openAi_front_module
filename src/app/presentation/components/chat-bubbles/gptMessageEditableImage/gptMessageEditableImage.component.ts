@@ -12,13 +12,13 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmi
 })
 export class GptMessageEditableImageComponent implements AfterViewInit {
   @Input ({ required:true }) text!: string;
-  @Input ({ required:true }) image!: string;
+  @Input ({ required:true }) imageInfo!:{ url:string, alt:string} ;
   @ViewChild('canvas') private canvasElemnt?:ElementRef<HTMLCanvasElement>;
   
   
-  @Output () onSelecetedImage = new EventEmitter<string>();
+  @Output () onSelectedImage = new EventEmitter<string>();
 
-  public originalImage = signal<HTMLElement|null>(null);
+  public originalImage = signal<HTMLImageElement|null>(null);
   public isDrawing = signal(false);
   public coords = signal({x:0, y:0});
 
@@ -31,7 +31,7 @@ export class GptMessageEditableImageComponent implements AfterViewInit {
     const startY =  event.clientY - this.canvasElemnt.nativeElement.getBoundingClientRect().top;
     
     // Estos valores son mis coordenadas
-
+    console.log({startX, startY})
     this.coords.set({ x:startX, y:startY })
   }
 
@@ -55,11 +55,12 @@ export class GptMessageEditableImageComponent implements AfterViewInit {
 
     const ctx = canvas.getContext('2d')!;
    
-    ctx.clearRect(0,0, canvas.width, canvas.height )
+    ctx.clearRect(0,0, canvasWidth, canvasHeight )
     
-    ctx.drawImage(this.originalImage()!, 0,0, canvas.width, canvas.height )
+    ctx.drawImage(this.originalImage()!, 0,0, canvasWidth, canvasHeight )
     
-    ctx.fillRect( this.coords().x, this.coords().y, width, height )
+    //ctx.fillRect( this.coords().x, this.coords().y, width, height )
+    ctx.clearRect( this.coords().x, this.coords().y, width, height )
   }
   
   ngAfterViewInit(): void {
@@ -70,7 +71,7 @@ export class GptMessageEditableImageComponent implements AfterViewInit {
 
     const img = new Image();
     img.crossOrigin = 'Anonymus';
-    img.src = this.image;
+    img.src = this.imageInfo.url;
 
     this.originalImage.set( img );
 
@@ -79,10 +80,20 @@ export class GptMessageEditableImageComponent implements AfterViewInit {
     }
   }
 
+  onMouseUp(){
+    this.isDrawing.set(false);
+
+    const canvas = this.canvasElemnt!.nativeElement;
+    const url = canvas.toDataURL('image/png');
+
+    console.log(url)
+    this.onSelectedImage.emit( url )
+
+  }
 
   handleClick() {
     
-    this.onSelecetedImage.emit( this.image )
+    this.onSelectedImage.emit( this.imageInfo.url )
   }
 
  }
